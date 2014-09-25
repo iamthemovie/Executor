@@ -27,6 +27,11 @@
                 ((ExecutorBase)instance).SetArguments(args);
             }
 
+            if (instance.GetType().IsOf(typeof(IWorkflow)))
+            {
+                ((WorkflowBase)instance).Bootstrap(ExecutorManager.WorkflowModels.FirstOrDefault(m => m.Name == name));
+            }
+
             return instance;
         }
     }

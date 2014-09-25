@@ -12,24 +12,19 @@
     {
         public WorkflowBase()
         {
-        }
-
-        public WorkflowBase(WorkflowModel model)
-        {
-            Executors = new List<IExecutor>();
-            this.Bootstrap(model);
+            this.Executors = new List<IExecutor>();
         }
 
         public void Bootstrap(WorkflowModel model)
         {
             this.Name = model.Name;
             this.SetArguments(model.Arguments.ToArray());
-            this.Executors.AddRange(model.Jobs.Select(j => ExecutorFactory.Create(j, null)));
+            this.Executors.AddRange(model.Jobs.Select(j => ExecutorFactory.Create(j, new string[] {} )));
         }
 
         public override void Run()
         {
-            throw new NotImplementedException();
+            Executors.ForEach(e => e.Run());
         }
 
         public string Name { get; set; }

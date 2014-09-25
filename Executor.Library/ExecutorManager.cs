@@ -11,6 +11,7 @@
     using Executor.Library.Base;
     using Executor.Library.Factories;
     using Executor.Library.Interfaces;
+    using Executor.Library.Providers;
 
     public static class ExecutorManager
     {
@@ -20,6 +21,8 @@
         }
 
         internal static List<Type> CompatibleTypes { get; set; }
+
+        internal static List<WorkflowModel> WorkflowModels { get; set; }
 
         /// <summary>
         /// Loads all the DLLs into the App Domain from the specified directory
@@ -71,15 +74,23 @@
             }
 
             /* Initialise/bootstrap the workflows from the models then add to the executors
+             * TODO: Future support for workflow inheritance and types
              */
-            var types =
-                instance.CreateDataProviderInstance(directory)
-                    .GetWorkflows()
-                    .Select(m => new WorkflowBase(m))
-                    .Select(w => w.GetType())
-                    .Where(t => t.IsOf(typeof(IExecutor)));
+            //var types =
+            //    instance.CreateDataProviderInstance(directory)
+            //        .GetWorkflows()
+            //        .Select(m => m.Type)
+            //        .Select(w => w.GetType())
+            //        .Where(t => t.IsOf(typeof(IExecutor)));
+            //CompatibleTypes.AddRange(types);
 
-            CompatibleTypes.AddRange(types);
+            WorkflowModels = instance.CreateDataProviderInstance(directory)
+                                .GetWorkflows()
+                                .ToList();
+
+            /* Temp: Add workflow base to compatible types once successfully parsing the model data
+             */
+            CompatibleTypes.Add(typeof(WorkflowBase));
         }
 
         private static void Run(string name, string[] args)
