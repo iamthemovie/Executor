@@ -17,7 +17,12 @@ namespace Executor.Library
     {
         public override void Run()
         {
-            throw new NotImplementedException("I AM AN EXECUTOR!!");
+            //throw new NotImplementedException("I R AN EXECUTOR!!");
+            Console.WriteLine("I R AN EXECUTOR");
+            foreach (var argument in this.Arguments)
+            {
+                Console.WriteLine("Argument: {0}", argument);
+            }
         }
     }
 }

@@ -23,12 +23,10 @@
             var instance = type.CreateExecutorInstance();
             if (instance.GetType().IsSubclassOf(typeof(ExecutorBase)))
             {
-                var executor = (ExecutorBase)instance;
-                executor.SetArguments(args);
-                return executor;
+                ((ExecutorBase)instance).SetArguments(args);
             }
 
-            throw new Exception("Invalid Executor Type!");
+            return instance;
         }
     }
 }
