@@ -1,0 +1,11 @@
+﻿{
+    "name":  "Test1",
+    "jobs": [
+      "PreTestJob",
+      "PostTestJob",
+      "PreTestJob",
+      "PostTestJob",
+      "TestJob",
+      "TestJob"
+    ]
+}

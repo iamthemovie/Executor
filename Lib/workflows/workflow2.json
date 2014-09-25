@@ -1,0 +1,11 @@
+﻿{
+    "name": "Test2",
+  "dependencies": [
+    "workflow1"
+  ],
+  "jobs": [
+    "PreTestJob",
+    "TestJob",
+    "PostTestJob"
+  ]
+}
