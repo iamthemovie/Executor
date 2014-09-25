@@ -1,0 +1,12 @@
+{
+    "name": "ExampleWorkflow",
+    "args": [
+        "Hello",
+        "World"
+    ],
+    "jobs": [
+        "ExampleExecutor",
+        "ExampleExecutor",
+        "ExampleExecutor"
+    ]
+}

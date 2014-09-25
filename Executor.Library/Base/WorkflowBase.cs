@@ -10,6 +10,10 @@
 
     public class WorkflowBase : ExecutorBase, IWorkflow
     {
+        public WorkflowBase()
+        {
+        }
+
         public WorkflowBase(WorkflowModel model)
         {
             Executors = new List<IExecutor>();
@@ -19,6 +23,7 @@
         public void Bootstrap(WorkflowModel model)
         {
             this.Name = model.Name;
+            this.SetArguments(model.Arguments.ToArray());
             this.Executors.AddRange(model.Jobs.Select(j => ExecutorFactory.Create(j, null)));
         }
 

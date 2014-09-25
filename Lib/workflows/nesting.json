@@ -1,0 +1,16 @@
+{
+    "name":  "NestingExampleWorkflow",
+    "jobs": [
+        "ExampleExecutor",
+        {
+            "name": "NestedWorkflow",
+            "jobs": [
+                "ExampleExecutor",
+                "ExampleExecutor",
+                "ExampleExecutor"
+            ]
+        },
+        "ExampleExecutor",
+        "ExampleExecutor"
+    ]
+}

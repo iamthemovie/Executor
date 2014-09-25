@@ -46,7 +46,7 @@
     <Compile Include="Base\WorkflowBase.cs" />
     <Compile Include="Example.cs" />
     <Compile Include="ExecutorManager.cs" />
-    <Compile Include="Extentions.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Factories\ExecutorFactory.cs" />
     <Compile Include="Interfaces\IExecutor.cs" />
     <Compile Include="Interfaces\IWorkflow.cs" />

@@ -9,7 +9,7 @@ namespace Executor.Library
     using Executor.Library.Attributes;
     using Executor.Library.Interfaces;
 
-    public static class Extentions
+    public static class Extensions
     {
         public static bool HasAttribute(this Type t, Type attr)
         {
@@ -36,9 +36,9 @@ namespace Executor.Library
             return (IExecutor)Activator.CreateInstance(type);
         }
 
-        internal static IDataProvider CreateDataProviderInstance(this Type type)
+        internal static IDataProvider CreateDataProviderInstance(this Type type, string directory)
         {
-            return (IDataProvider)Activator.CreateInstance(type);
+            return (IDataProvider)Activator.CreateInstance(type, directory);
         }
     }
 }

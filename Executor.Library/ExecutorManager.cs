@@ -73,7 +73,7 @@
             /* Initialise/bootstrap the workflows from the models then add to the executors
              */
             var types =
-                instance.CreateDataProviderInstance()
+                instance.CreateDataProviderInstance(directory)
                     .GetWorkflows()
                     .Select(m => new WorkflowBase(m))
                     .Select(w => w.GetType())

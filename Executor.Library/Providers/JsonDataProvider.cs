@@ -7,9 +7,15 @@
     using Executor.Library.Interfaces;
 
     using Newtonsoft.Json;
+    using System;
 
     public class JsonDataProvider : IDataProvider
     {
+        public JsonDataProvider(string directory)
+        {
+            this.Directory = directory;
+        }
+
         /// <summary>
         /// Gets or sets the file system directory to parse JSON files.
         /// </summary>

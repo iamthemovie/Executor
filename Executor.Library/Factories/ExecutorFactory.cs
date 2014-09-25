@@ -10,7 +10,8 @@
     {
         public static IExecutor Create(string name, string[] args)
         {
-            var type = ExecutorManager.CompatibleTypes.FirstOrDefault(t => t.GetExecutorName() == name);
+            var type = ExecutorManager.CompatibleTypes.FirstOrDefault(t => t.GetExecutorName() == name || t.IsOf(typeof(IWorkflow)));
+
             if (type == null)
             {
                 throw new Exception("Executor not found exception!");
