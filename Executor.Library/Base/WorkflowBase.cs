@@ -17,6 +17,11 @@
 
         public void Bootstrap(WorkflowModel model)
         {
+            if (model == null)
+            {
+                return;
+            }
+
             this.Name = model.Name;
             this.SetArguments(model.Arguments.Split(' '));
             this.Executors.AddRange(model.Jobs.Select(j => ExecutorFactory.Create(j.Name, j.Arguments.Split(' '))));

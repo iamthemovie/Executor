@@ -1,10 +1,20 @@
 {
     "name": "ExampleWorkflow",
-    "args": "workflow args",
+    "args": "pipeline",
     "jobs": [
         {
-            "name": "ExampleExecutor",
-            "args": "hello world"
+            "name": "NestedWorkflow",
+            "args": "async",
+            "jobs": [
+                {
+                    "name": "ExampleExecutor",
+                    "args": "download iis logs"
+                },
+                {
+                    "name": "ExampleExecutor",
+                    "args": "download sitecore logs"
+                }
+            ]
         },
         {
             "name": "ExampleExecutor",

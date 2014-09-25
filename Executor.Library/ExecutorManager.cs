@@ -84,13 +84,28 @@
             //        .Where(t => t.IsOf(typeof(IExecutor)));
             //CompatibleTypes.AddRange(types);
 
-            WorkflowModels = instance.CreateDataProviderInstance(directory)
+            var models = instance.CreateDataProviderInstance(directory)
                                 .GetWorkflows()
                                 .ToList();
+
+            WorkflowModels = new List<WorkflowModel>(models);
+
+            /* Construct workflow cache from nested workflows.
+             */
+            models.ForEach(CacheInnerWorkflows);
 
             /* Temp: Add workflow base to compatible types once successfully parsing the model data
              */
             CompatibleTypes.Add(typeof(WorkflowBase));
+        }
+
+        private static void CacheInnerWorkflows(WorkflowModel model)
+        {
+            foreach (var job in model.Jobs.Where(j => j.Jobs != null && j.Jobs.Any()))
+            {
+                WorkflowModels.Add(job);
+                CacheInnerWorkflows(job);
+            }
         }
 
         private static void Run(string name, string[] args)
