@@ -31,9 +31,14 @@ namespace Executor.Library
             return attr != null ? attr.Name : string.Empty;
         }
 
-        public static IExecutor CreateInstance(this Type type)
+        public static IExecutor CreateExecutorInstance(this Type type)
         {
             return (IExecutor)Activator.CreateInstance(type);
+        }
+
+        internal static IDataProvider CreateDataProviderInstance(this Type type)
+        {
+            return (IDataProvider)Activator.CreateInstance(type);
         }
     }
 }

@@ -30,7 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,12 +43,17 @@
   <ItemGroup>
     <Compile Include="Attributes\Executor.cs" />
     <Compile Include="Base\ExecutorBase.cs" />
+    <Compile Include="Base\WorkflowBase.cs" />
     <Compile Include="Example.cs" />
     <Compile Include="ExecutorManager.cs" />
     <Compile Include="Extentions.cs" />
+    <Compile Include="Factories\ExecutorFactory.cs" />
     <Compile Include="Interfaces\IExecutor.cs" />
     <Compile Include="Interfaces\IWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\IDataProvider.cs" />
+    <Compile Include="Providers\JsonDataProvider.cs" />
+    <Compile Include="Providers\WorkflowModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

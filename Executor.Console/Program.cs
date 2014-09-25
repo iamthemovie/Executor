@@ -20,6 +20,10 @@ namespace Executor.Console
              */
             ExecutorManager.LoadPluginsDirectory("plugins");
 
+            /* Load the workflows directory
+             */
+            ExecutorManager.LoadWorkflowsDirectory("workflows");
+
             /* For now just have the manager deal with everything but we'll
              * switch this out for a better command line parsing in later
              * updates.

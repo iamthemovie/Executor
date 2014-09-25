@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Executor.Library.Interfaces
+﻿namespace Executor.Library.Interfaces
 {
+    using Executor.Library.Providers;
+
     interface IWorkflow
     {
-        void Bootstrap();
+        string Name { get; set; }
+
+        void Bootstrap(WorkflowModel model);
     }
 }

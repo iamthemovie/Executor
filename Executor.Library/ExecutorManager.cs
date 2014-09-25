@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Executor.Library
+﻿namespace Executor.Library
 {
-    using System.Collections.ObjectModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
-    using System.Threading;
 
     using Executor.Library.Attributes;
     using Executor.Library.Base;
+    using Executor.Library.Factories;
     using Executor.Library.Interfaces;
 
     public static class ExecutorManager
@@ -20,9 +17,12 @@ namespace Executor.Library
         static ExecutorManager()
         {
             CompatibleTypes = new List<Type>();
+            Workflows = new List<IWorkflow>();
         }
 
-        private static List<Type> CompatibleTypes { get; set; } 
+        internal static List<Type> CompatibleTypes { get; set; }
+
+        internal static List<IWorkflow> Workflows { get; set; } 
 
         /// <summary>
         /// Loads all the DLLs into the App Domain from the specified directory
@@ -58,29 +58,40 @@ namespace Executor.Library
             CompatibleTypes.AddRange(types);
         }
 
+        public static void LoadWorkflowsDirectory(string directory)
+        {
+            /*  TODO: Refactor the data provider config
+             */
+
+            var instance =
+                AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .FirstOrDefault(t => t.Name == ConfigurationManager.AppSettings["DataProvider"] && t.IsOf(typeof(IDataProvider)));
+
+            if (instance == null)
+            {
+                throw new Exception("Invalid data provider");
+            }
+
+            Workflows.AddRange(instance.CreateDataProviderInstance().GetWorkflows().Select(m => new WorkflowBase(m)));
+        }
+
         private static void Run(string name, string[] args)
         {
-            var type = CompatibleTypes.FirstOrDefault(t => t.GetExecutorName() == name);
-            if (type == null)
-            {
-                throw new Exception("Executor not found execption!");
-            }
-
-            /* Create and instance and run it, but if it has a base somewhere
-             * underneath of the ExecutorBase then we can inject settings and
-             * other things into.
-             */
-            var instance = type.CreateInstance();
-            if (instance.GetType().IsSubclassOf(typeof(ExecutorBase)))
-            {
-                ((ExecutorBase)instance).SetArguments(args);
-            }
-
-            instance.Run();
+            ExecutorFactory.Create(name, args).Run();
         }
 
         public static void Run(string[] args)
         {
+            //if (Workflows.Any())
+            //{
+            //    Workflows.ForEach(
+            //        w =>
+            //            {
+            //                Run(w.Name, args)
+            //            });
+            //}
+
             if (!args.Any())
             {
                 return; // throw an exception?
