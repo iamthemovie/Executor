@@ -14,8 +14,10 @@ namespace Executor.Library.Base
 
         public abstract void Run();
 
-        protected void SetArguments(string[] arguments)
+        public void SetArguments(string[] arguments)
         {
+            /* This needs to be immutable after setting it... todo.
+             */
             this.Arguments = arguments;
         }
     }

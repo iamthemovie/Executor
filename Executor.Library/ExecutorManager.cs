@@ -12,6 +12,7 @@ namespace Executor.Library
     using System.Threading;
 
     using Executor.Library.Attributes;
+    using Executor.Library.Base;
     using Executor.Library.Interfaces;
 
     public static class ExecutorManager
@@ -57,15 +58,40 @@ namespace Executor.Library
             CompatibleTypes.AddRange(types);
         }
 
-        public static void Run(string name)
+        private static void Run(string name, string[] args)
         {
             var type = CompatibleTypes.FirstOrDefault(t => t.GetExecutorName() == name);
             if (type == null)
             {
                 throw new Exception("Executor not found execption!");
-            }           
+            }
+
+            /* Create and instance and run it, but if it has a base somewhere
+             * underneath of the ExecutorBase then we can inject settings and
+             * other things into.
+             */
+            var instance = type.CreateInstance();
+            if (instance.GetType().IsSubclassOf(typeof(ExecutorBase)))
+            {
+                ((ExecutorBase)instance).SetArguments(args);
+            }
+
+            instance.Run();
         }
 
+        public static void Run(string[] args)
+        {
+            if (!args.Any())
+            {
+                return; // throw an exception?
+            }
 
+            if (string.IsNullOrEmpty(args[0]))
+            {
+                return; // and here?
+            }
+
+            Run(args[0], args);
+        }
     }
 }

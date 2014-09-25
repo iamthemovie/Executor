@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Attributes\Executor.cs" />
     <Compile Include="Base\ExecutorBase.cs" />
+    <Compile Include="Example.cs" />
     <Compile Include="ExecutorManager.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="Interfaces\IExecutor.cs" />

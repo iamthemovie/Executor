@@ -14,15 +14,19 @@ namespace Executor.Console
     {
         static void Main(string[] args)
         {
-            /* Create an instance of the ExecutorManager
+            /* Load the plugins directory.
+             * - this wont be static
+             * - also the examples are loaded in by reference.
              */
             ExecutorManager.LoadPluginsDirectory("plugins");
 
-            /* Load assemblies into it from configuration.
+            /* For now just have the manager deal with everything but we'll
+             * switch this out for a better command line parsing in later
+             * updates.
              */
-            ExecutorManager.Run("Test Executor");
+            ExecutorManager.Run(args);
 
-            /* Take
+            /* remove this
              */
             Console.ReadLine();
         }
