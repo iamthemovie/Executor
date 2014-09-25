@@ -1,12 +1,18 @@
 {
     "name": "ExampleWorkflow",
-    "args": [
-        "Hello",
-        "World"
-    ],
+    "args": "workflow args",
     "jobs": [
-        "ExampleExecutor",
-        "ExampleExecutor",
-        "ExampleExecutor"
+        {
+            "name": "ExampleExecutor",
+            "args": "hello world"
+        },
+        {
+            "name": "ExampleExecutor",
+            "args": "this is a job"
+        },
+        {
+            "name": "ExampleExecutor",
+            "args": "and another"
+        }
     ]
 }
