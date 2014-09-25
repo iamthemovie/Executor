@@ -21,6 +21,13 @@
         /// <returns>The collection of workflow models.</returns>
         public IEnumerable<WorkflowModel> GetWorkflows()
         {
+            /* Null reference exceptions dude...
+             */
+            if (string.IsNullOrEmpty(this.Directory))
+            {
+                return new List<WorkflowModel>();
+            }
+
             return System.IO.Directory.GetFiles(this.Directory, "*.json").Select(
                 f =>
                     {
