@@ -17,12 +17,9 @@
         static ExecutorManager()
         {
             CompatibleTypes = new List<Type>();
-            Workflows = new List<IWorkflow>();
         }
 
         internal static List<Type> CompatibleTypes { get; set; }
-
-        internal static List<IWorkflow> Workflows { get; set; } 
 
         /// <summary>
         /// Loads all the DLLs into the App Domain from the specified directory
@@ -73,7 +70,16 @@
                 throw new Exception("Invalid data provider");
             }
 
-            Workflows.AddRange(instance.CreateDataProviderInstance().GetWorkflows().Select(m => new WorkflowBase(m)));
+            /* Initialise/bootstrap the workflows from the models then add to the executors
+             */
+            var types =
+                instance.CreateDataProviderInstance()
+                    .GetWorkflows()
+                    .Select(m => new WorkflowBase(m))
+                    .Select(w => w.GetType())
+                    .Where(t => t.IsOf(typeof(IExecutor)));
+
+            CompatibleTypes.AddRange(types);
         }
 
         private static void Run(string name, string[] args)
@@ -83,15 +89,6 @@
 
         public static void Run(string[] args)
         {
-            //if (Workflows.Any())
-            //{
-            //    Workflows.ForEach(
-            //        w =>
-            //            {
-            //                Run(w.Name, args)
-            //            });
-            //}
-
             if (!args.Any())
             {
                 return; // throw an exception?
